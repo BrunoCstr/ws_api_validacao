@@ -189,11 +189,11 @@ app.use((err, req, res, next) => {
 // INICIALIZAÇÃO DO SERVIDOR
 // ═══════════════════════════════════════════════════════════════════════════════
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
     console.log('═══════════════════════════════════════════════════════════════')
     console.log('🚀 API de Validação de Usuário')
     console.log('═══════════════════════════════════════════════════════════════')
-    console.log(`📡 Servidor rodando em: http://localhost:${PORT}`)
+    console.log(`📡 Servidor rodando em: http://0.0.0.0:${PORT}`)
     console.log(`🔐 Autenticação: ${API_KEY ? 'ATIVADA' : 'DESATIVADA (configure API_KEY no .env)'}`)
     console.log('═══════════════════════════════════════════════════════════════')
     console.log('')
