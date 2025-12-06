@@ -73,9 +73,9 @@ const authenticateApiKey = (req, res, next) => {
 
 /**
  * Valida e normaliza o usuário
- * Padrão: 7 caracteres alfanuméricos (letras a-z e números 0-9)
+ * Padrão: 7 caracteres sendo exatamente 2 letras e 5 números (em qualquer posição)
  * 
- * Exemplos válidos: 268g05v, 8683bx6, c0a8370, k89d892
+ * Exemplos válidos: 5s8255d, 33p1y21, 1010a7t
  */
 function validateUser(user) {
     // Verifica se foi informado
@@ -97,28 +97,37 @@ function validateUser(user) {
         }
     }
 
-    // Regex: exatamente 7 caracteres alfanuméricos (a-z, 0-9)
-    const regex = /^[a-z0-9]{7}$/
-
-    if (!regex.test(normalizedUser)) {
-        // Mensagens de erro específicas para melhor UX
-        if (normalizedUser.length !== 7) {
-            return {
-                valid: false,
-                error: `Usuário inválido. O usuário deve ter exatamente 7 caracteres. Você digitou ${normalizedUser.length}.`
-            }
-        }
-
-        if (/[^a-z0-9]/.test(normalizedUser)) {
-            return {
-                valid: false,
-                error: 'Usuário inválido. Use apenas letras e números, sem espaços ou caracteres especiais.'
-            }
-        }
-
+    // Validação 1: Deve ter exatamente 7 caracteres
+    if (normalizedUser.length !== 7) {
         return {
             valid: false,
-            error: 'Usuário inválido. Digite um usuário com 7 caracteres alfanuméricos.'
+            error: `Usuário inválido. O usuário deve ter exatamente 7 caracteres. Você digitou ${normalizedUser.length}.`
+        }
+    }
+
+    // Validação 2: Deve conter apenas letras (a-z) e números (0-9)
+    if (!/^[a-z0-9]+$/.test(normalizedUser)) {
+        return {
+            valid: false,
+            error: 'Usuário inválido. Use apenas letras e números, sem espaços ou caracteres especiais.'
+        }
+    }
+
+    // Validação 3: Deve ter exatamente 2 letras
+    const letters = normalizedUser.match(/[a-z]/g) || []
+    if (letters.length !== 2) {
+        return {
+            valid: false,
+            error: `Usuário inválido. O usuário deve ter exatamente 2 letras. Você digitou ${letters.length}.`
+        }
+    }
+
+    // Validação 4: Deve ter exatamente 5 números
+    const numbers = normalizedUser.match(/[0-9]/g) || []
+    if (numbers.length !== 5) {
+        return {
+            valid: false,
+            error: `Usuário inválido. O usuário deve ter exatamente 5 números. Você digitou ${numbers.length}.`
         }
     }
 
