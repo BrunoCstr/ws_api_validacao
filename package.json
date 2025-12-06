@@ -1,0 +1,20 @@
+{
+  "name": "ws_api_validacao",
+  "version": "1.0.0",
+  "description": "API de validação de usuário para ManyChat",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.22.0",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^5.2.1",
+    "express-rate-limit": "^7.5.0"
+  }
+}
